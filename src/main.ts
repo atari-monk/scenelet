@@ -13,7 +13,7 @@ import { RedBallScene } from "./scenes/red-ball";
 window.addEventListener("load", async () => {
     const { gameApp, game } = await initEngine();
     registerScenes(gameApp, game);
-    setScene(gameApp);
+    startSceneRotation(gameApp);
 });
 
 async function initEngine() {
@@ -35,6 +35,36 @@ function registerScenes(gameApp: GameAppFactory, game: GameEngine) {
     gameApp.registerScene("Red Ball", new RedBallScene(game));
 }
 
-function setScene(gameApp: GameAppFactory) {
-    gameApp.transitionToScene("Red Ball");
+function startSceneRotation(gameApp: GameAppFactory) {
+    // Define scenes with their durations in seconds
+    const scenes = [
+        { name: "Animated Circles", duration: 15 },
+        { name: "Bouncing Ball", duration: 10 },
+        { name: "Cross Lines", duration: 3 },
+        { name: "Diagonal Lines", duration: 3 },
+        { name: "Gravity Ball", duration: 8 },
+        { name: "Particle System", duration: 15 },
+        { name: "Pulsing Circle", duration: 20 },
+        { name: "Random Circles", duration: 5 },
+        { name: "Red Ball", duration: 5 },
+    ];
+
+    let currentIndex = 0;
+
+    const transitionToNextScene = () => {
+        // Get current scene info
+        const currentScene = scenes[currentIndex];
+
+        // Transition to current scene
+        gameApp.transitionToScene(currentScene.name);
+
+        // Set timeout for next transition
+        setTimeout(() => {
+            currentIndex = (currentIndex + 1) % scenes.length;
+            transitionToNextScene();
+        }, currentScene.duration * 1000); // Convert seconds to milliseconds
+    };
+
+    // Start the rotation
+    transitionToNextScene();
 }
