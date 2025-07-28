@@ -8,6 +8,7 @@ import { GravityBallScene } from "./scenes/gravity-ball";
 import { ParticleSystemScene } from "./scenes/particle-system";
 import { PulsingCircleScene } from "./scenes/pulsing-circle";
 import { RandomCirclesScene } from "./scenes/random-circles";
+import { RedBallScene } from "./scenes/red-ball";
 
 window.addEventListener("load", async () => {
     const { gameApp, game } = await initEngine();
@@ -31,8 +32,9 @@ function registerScenes(gameApp: GameAppFactory, game: GameEngine) {
     gameApp.registerScene("Particle System", new ParticleSystemScene(game));
     gameApp.registerScene("Pulsing Circle", new PulsingCircleScene(game));
     gameApp.registerScene("Random Circles", new RandomCirclesScene(game));
+    gameApp.registerScene("Red Ball", new RedBallScene(game));
 }
 
 function setScene(gameApp: GameAppFactory) {
-    gameApp.transitionToScene("Random Circles");
+    gameApp.transitionToScene("Red Ball");
 }
