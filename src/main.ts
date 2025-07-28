@@ -1,0 +1,28 @@
+import "./style.css";
+import { createCrossLinesScene } from "./createCrossLinesScene";
+import { GameAppFactory, GameEngine } from "zippy-game-engine";
+import { AnimatedCirclesScene } from "./scenes/animated-circles";
+import { BouncingBallScene } from "./scenes/bouncing-ball";
+
+window.addEventListener("load", async () => {
+    const { gameApp, game } = await initEngine();
+    registerScenes(gameApp, game);
+    setScene(gameApp);
+});
+
+async function initEngine() {
+    const gameApp = new GameAppFactory();
+    await gameApp.initialize();
+    const game = gameApp.getGameEngine();
+    return { gameApp, game };
+}
+
+function registerScenes(gameApp: GameAppFactory, game: GameEngine) {
+    gameApp.registerScene("Cross Lines", createCrossLinesScene(game));
+    gameApp.registerScene("Animated Circles", new AnimatedCirclesScene(game));
+    gameApp.registerScene("Bouncing Ball", new BouncingBallScene(game));
+}
+
+function setScene(gameApp: GameAppFactory) {
+    gameApp.transitionToScene("Bouncing Ball");
+}
